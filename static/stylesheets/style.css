@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:600,800');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	background-color: firebrick;
+}
+
+
+/* GRID */
+.container {
+	display: grid;
+	grid-template-columns: 6% 1fr 6%;
+	grid-template-rows: minmax(2%, auto) 1fr 6%;
+	height: 100%;
+	width: 100%;
+	grid-gap: 5px 0;
+}
+.item1 {
+	grid-area: 1/1/span 1/span 3;
+	background-color: black;
+	z-index: 99;
+}
+.item2 {
+	grid-area: 2/2/span 1/span 1;
+	overflow: scroll;
+	background-color: black;
+	color: white;
+	z-index: 30;
+}
+.item3 {
+	grid-area: 3/1/span 1/span 3;
+	background-color: black;
+	z-index: 50;
+}
+
+/* header */
+.logos {
+	float: right;
+	display: inline-block;
+}
+.logo {
+	height: 45px;
+	width: 45px;
+	margin: 0 30px;
+	display: inline-block;
+	float: right;
+}
+.logo img {
+	width: 100%;
+}
+.logo:hover {
+	background-color: darkorange;
+}
+
+.this_page {
+	background-color: gray;
+}
+.this_page:hover {
+	background-color: gray;
+	color: white;
+}
+a {
+	text-decoration: none;
+}
+
+ul {
+	text-transform: uppercase;
+	list-style-type: none;
+}
+li {
+	display: inline-block;
+	float: left;
+	margin-right: 1px;
+}
+li a:hover {
+	background-color: maroon;
+}
+li a {
+	display: block;
+	min-width: 140px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	color: white;
+	font-weight: bold;
+}
+
+.heading {
+	background-color: black;
+	width: 100%;
+}
+.heading h1 {
+	width: 100%;
+	text-align: center;
+	color: white;
+	text-transform: uppercase;
+	font-size: 7vw;
+	font-family: sans-serif;
+	color: red;
+}
+
+/* Main */
+/* HOME */
+#dp {
+	height: auto;
+	max-width: 100%;
+	margin: 10px 0;
+	padding-left: 10px;
+}
+
+.column {
+	width: 50%;
+	float: left;
+}
+main h1 {
+	text-align: center;
+	padding: 40px 20px;
+	font-size: 8vw;
+	font-family: 'Saira Extra Condensed', sans-serif;
+	color: red;
+}
+
+main p {
+	text-align: center;
+	font-size: 2.5vw;
+	line-height: 3.5vw;
+	padding: 10px 15px;
+}
+p a {
+	text-decoration: none;
+	color: white;
+}
+p span {
+	color: red;
+}
+
+/* Academics */
+.row-acad {
+	padding: 10px 5px;
+	position: relative;
+}
+.acad-content {
+	background: rgb(0, 0, 0, 0.2);
+	position: absolute;
+	top: 20px;
+	left: 20%;
+	right: 20%;
+}
+.row-acad h2 {
+	color: red;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 4vw;
+}
+.row-acad h3{
+	text-align: center;
+	color: white;
+	font-size: 3vw;
+}
+.row-acad img {
+	width: 100%;
+	opacity: 0.2;
+}
+#acad {
+	background-color: black;
+}
+
+
+/* Interests */
+.int-content {
+	background: rgb(0, 0, 0, 0.2);
+	position: absolute;
+	top: 20px;
+	left: 5%;
+	right: 5%;
+}
+
+
+/* FOOTER */
+.item3 p {
+	width: 100%;
+	text-align: center;
+	color: white;
+	padding: 0.4% 0;
+}
+
+
+/* Responsive */
+.show-menu {
+	text-decoration: none;
+	color: white;
+	background-color: black;
+	text-align: center;
+	padding: 10px 0;
+	display: none;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+input[type=checkbox]:checked ~ #navbar {
+	display: block;
+}
+
+@media screen and (max-width: 1000px) {
+	ul {
+		position: static;
+		display: none;
+	}
+	li {
+		margin-bottom: 1px;
+	}
+	ul li, li a{
+		width: 100%;
+	}
+	.show-menu {
+		display: block;
+	}
+	.logo {
+		margin: 0 7%;
+		float: none;
+	}
+	.logos {
+		margin-left: 10%;
+		margin-right: 10%;
+		width: 80%;
+	}
+	.column {
+		float: none;
+		width: 100%;
+	}
+	main p {
+		line-height: 6vw;
+	}
+	main h1 {
+		padding: 10px 0;
+	}
+	#dp {
+		margin: 0 5%;
+		width: 90%;
+		height: auto;
+	}
+
+}
+
+@media screen and (max-width: 570px) {
+	.logo {
+		margin: 0 2.5%;
+		float: none;
+	}
+	.logos {
+		margin-left: 0 auto;
+		width: 80%;
+	}
+	.acad-content {
+		left: 10%;
+		right: 10%;
+	}
+}
