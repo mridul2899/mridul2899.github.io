@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Let's Play LUDO!</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="static/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="scripts/ludo.js" async></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+
+    </header>
+    <div class="left">
+      <div class="input">Set Die Value: <input type="text" name="Die Value" size="1" placeholder="1 to 6" id="input" max="6" min="1" maxlength="1"></div>
+      <p id="roll" onclick="roll()">ROLL!</p>
+      <div id="dice"></div>
+      <p id="again" onclick="reset()">Play Again</p>
+      <div class="over">
+        <div class="cspace blue inline" id="bo1"></div>
+        <div class="cspace blue inline" id="bo2"></div>
+        <div class="cspace blue inline" id="bo3"></div>
+        <div class="cspace blue inline" id="bo4"></div>
+      </div>
+      <div class="over">
+        <div class="cspace green inline" id="go1"></div>
+        <div class="cspace green inline" id="go2"></div>
+        <div class="cspace green inline" id="go3"></div>
+        <div class="cspace green inline" id="go4"></div>
+      </div>
+      <div class="over">
+        <div class="cspace yellow inline" id="yo1"></div>
+        <div class="cspace yellow inline" id="yo2"></div>
+        <div class="cspace yellow inline" id="yo3"></div>
+        <div class="cspace yellow inline" id="yo4"></div>
+      </div>
+      <div class="over">
+        <div class="cspace red inline" id="ro1"></div>
+        <div class="cspace red inline" id="ro2"></div>
+        <div class="cspace red inline" id="ro3"></div>
+        <div class="cspace red inline" id="ro4"></div>
+      </div>
+      <p id="win"></p>
+    </div>
+
+    <div class="border-green">
+      <div class="corner-green">
+        <div class="border-inside">
+          <div class="column">
+            <div class="cspace green" id="gs1">
+              <div id="gp1" class="piece gp"></div>
+            </div>
+            <div class="cspace green" id="gs2">
+              <div id="gp2" class="piece gp"></div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="cspace green" id="gs3">
+              <div id="gp3" class="piece gp"></div>
+            </div>
+            <div class="cspace green" id="gs4">
+              <div id="gp4" class="piece gp"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-yellow">
+      <div class="corner-yellow">
+        <div class="border-inside">
+          <div class="column">
+            <div class="cspace yellow" id="ys1">
+              <div id="yp1" class="piece yp"></div>
+            </div>
+            <div class="cspace yellow" id="ys2">
+              <div id="yp2" class="piece yp"></div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="cspace yellow" id="ys3">
+              <div id="yp3" class="piece yp"></div>
+            </div>
+            <div class="cspace yellow" id="ys4">
+              <div id="yp4" class="piece yp"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-blue">
+      <div class="corner-blue">
+        <div class="border-inside">
+          <div class="column">
+            <div class="cspace blue" id="bs1">
+              <div id="bp1" class="piece bp"></div>
+            </div>
+            <div class="cspace blue" id="bs2">
+              <div id="bp2" class="piece bp"></div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="cspace blue" id="bs3">
+              <div id="bp3" class="piece bp"></div>
+            </div>
+            <div class="cspace blue" id="bs4">
+              <div id="bp4" class="piece bp"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border-red">
+      <div class="corner-red">
+        <div class="border-inside">
+          <div class="column">
+            <div class="cspace red" id="rs1">
+              <div id="rp1" class="piece rp"></div>
+            </div>
+            <div class="cspace red" id="rs2">
+              <div id="rp2" class="piece rp"></div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="cspace red" id="rs3">
+              <div id="rp3" class="piece rp"></div>
+            </div>
+            <div class="cspace red" id="rs4">
+              <div id="rp4" class="piece rp"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="b0"></div>
+    <div id="b1"></div>
+    <div id="b2" class="blue"></div>
+    <div id="b3"></div>
+    <div id="b4"></div>
+    <div id="b5"></div>
+    <div id="b6"></div>
+    <div id="b7"></div>
+    <div id="b8"></div>
+    <div id="b9"></div>
+    <div id="b10"></div>
+    <div id="b11"></div>
+    <div id="b12"></div>
+    <div id="g0"></div>
+    <div id="g1"></div>
+    <div id="g2" class="green"></div>
+    <div id="g3"></div>
+    <div id="g4"></div>
+    <div id="g5"></div>
+    <div id="g6"></div>
+    <div id="g7"></div>
+    <div id="g8"></div>
+    <div id="g9"></div>
+    <div id="g10"></div>
+    <div id="g11"></div>
+    <div id="g12"></div>
+    <div id="y0"></div>
+    <div id="y1"></div>
+    <div id="y2" class="yellow"></div>
+    <div id="y3"></div>
+    <div id="y4"></div>
+    <div id="y5"></div>
+    <div id="y6"></div>
+    <div id="y7"></div>
+    <div id="y8"></div>
+    <div id="y9"></div>
+    <div id="y10"></div>
+    <div id="y11"></div>
+    <div id="y12"></div>
+    <div id="r0"></div>
+    <div id="r1"></div>
+    <div id="r2" class="red"></div>
+    <div id="r3"></div>
+    <div id="r4"></div>
+    <div id="r5"></div>
+    <div id="r6"></div>
+    <div id="r7"></div>
+    <div id="r8"></div>
+    <div id="r9"></div>
+    <div id="r10"></div>
+    <div id="r11"></div>
+    <div id="r12"></div>
+
+    <div class="red" id="r-1"></div>
+    <div class="red" id="r-2"></div>
+    <div class="red" id="r-3"></div>
+    <div class="red" id="r-4"></div>
+    <div class="red" id="r-5"></div>
+    <div class="yellow" id="y-1"></div>
+    <div class="yellow" id="y-2"></div>
+    <div class="yellow" id="y-3"></div>
+    <div class="yellow" id="y-4"></div>
+    <div class="yellow" id="y-5"></div>
+    <div class="blue" id="b-1"></div>
+    <div class="blue" id="b-2"></div>
+    <div class="blue" id="b-3"></div>
+    <div class="blue" id="b-4"></div>
+    <div class="blue" id="b-5"></div>
+    <div class="green" id="g-1"></div>
+    <div class="green" id="g-2"></div>
+    <div class="green" id="g-3"></div>
+    <div class="green" id="g-4"></div>
+    <div class="green" id="g-5"></div>
+
+    <div class="triangles">
+      <div class="triangle-y"></div>
+      <div class="triangle-b"></div>
+      <div class="triangle-g"></div>
+      <div class="triangle-r"></div>
+    </div>
+
+    <footer>
+
+    </footer>
+  </div>
+</body>
+</html>
