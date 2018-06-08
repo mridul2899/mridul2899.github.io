@@ -64,7 +64,6 @@ function roll() {
       else {
         att.value = 'play("' + players_f[player] + '2", "' + abc.id + '")';
       }
-      //console.log(att.value);
       abc.setAttributeNode(att);
       abc.style.cursor = "pointer";
       abc.parentNode.style.backgroundColor = "gray";
@@ -79,12 +78,10 @@ function roll() {
   let count = 0;
   for (let i = 1; i < 5; i++) {
     if ((player == 0 && b[i - 1] == 0) || (player == 1 && g[i - 1] == 0) || (player == 2 && y[i - 1] == 0) || (player == 3 && r[i - 1] == 0)) {
-      //console.log(i);
       count++;
       let abc = document.getElementById(players_f[player] + "p" + i);
       let att = document.createAttribute("onclick");
       att.value = 'play("' + abc.parentNode.id  + '", "' + abc.id + '")';
-      //console.log(att.value);
       abc.setAttributeNode(att);
       abc.style.cursor = "pointer";
       abc.parentNode.style.backgroundColor = "gray";
@@ -105,7 +102,6 @@ function roll() {
     document.getElementById("roll").style.cursor = "pointer";
     player = (player + 1) % no_players;
   }
-  /*bp[0] = play(bp[0]);*/
 }
 
 function play(piece, id) {
@@ -178,13 +174,6 @@ function play(piece, id) {
 }
 
 function move(piece, id, check) {
-  let itm = document.getElementById(id);
-  let cln = itm.cloneNode(true);
-  itm.parentNode.removeChild(itm);
-  document.getElementById(piece).appendChild(cln);
-  if (dice != 6 && check == 1) {
-    player = (player + 1) % no_players;
-  }
   let num1 = 0;
   let num2 = Number(id.slice(2)) - 1;
   let alpha = id.slice(0, 1);
@@ -201,12 +190,24 @@ function move(piece, id, check) {
     num1 = 3;
   }
   let num5 = 4 * num1 + num2;
-  position[num5] = piece;
+  console.log(position[num5]);
+  let itm = document.getElementById(id);
+  let cln = itm.cloneNode(true);
+  itm.parentNode.removeChild(itm);
+  document.getElementById(piece).appendChild(cln);
+  if (dice != 6 && check == 1) {
+    player = (player + 1) % no_players;
+  }
+  let count = 0, cuts = 0;
   for (let i = 0; i < 16; i++) {
     if (i >= num1 * 4 && i < num1 * 4 + 4) {
+      if (position[i] == piece) {
+        count++;
+      }
       continue;
     }
     if (position[i] == piece) {
+      cuts++;
       let num3 = Math.floor(i / 4);
       let num4 = i % 4 + 1;
       let alpha = "a";
@@ -232,6 +233,22 @@ function move(piece, id, check) {
       }
       move(alpha + "s" + num4, alpha + "p" + num4, 0);
     }
+  }
+  if (check == 1 && document.getElementById(position[num5]).childNodes[0]) {
+    document.getElementById(position[num5]).removeChild(document.getElementById(position[num5]).lastChild);
+  }
+  position[num5] = piece;
+  while (cuts > 1) {
+    document.getElementById(position[num5]).removeChild(document.getElementById(position[num5]).firstChild);
+    cuts--;
+  }
+  if (count > 0) {
+    var multiple = document.createElement("P");
+    var textnode = document.createTextNode("x" + (count + 1));
+    multiple.appendChild(textnode);
+    var parent = document.getElementById(id).parentNode;
+    multiple.style.cssText = "position: absolute; margin: 8px;";
+    parent.appendChild(multiple);
   }
   let win = document.getElementById("win");
   if (b_over == 4 || g_over == 4 || y_over == 4 || r_over == 4) {
@@ -263,7 +280,6 @@ function move(piece, id, check) {
 function change(piece, id) {
   if (piece.slice(1, 2) != "s") {
     if (Number(piece.slice(1)) == -5) {
-      //document.getElementById(id).style.display = "none";
       if (player == 0) {
         b_over++;
         b_active--;
@@ -326,10 +342,10 @@ function change(piece, id) {
 function reset() {
   b_active = 0, b_over = 0, y_active = 0, y_over = 0, r_active = 0, r_over = 0, g_active = 0, g_over = 0;
   for (var i = 1; i < 5; i++) {
-    move("bs" + i, "bp" + i, 0);
-    move("gs" + i, "gp" + i, 0);
-    move("ys" + i, "yp" + i, 0);
-    move("rs" + i, "rp" + i, 0);
+    move("bs" + i, "bp" + i, 1);
+    move("gs" + i, "gp" + i, 1);
+    move("ys" + i, "yp" + i, 1);
+    move("rs" + i, "rp" + i, 1);
   }
   dice = 0, player = 0, six_count = 0;
   position = ["bs1", "bs2", "bs3", "bs4", "gs1", "gs2", "gs3", "gs4", "ys1", "ys2", "ys3", "ys4", "rs1", "rs2", "rs3", "rs4"];
