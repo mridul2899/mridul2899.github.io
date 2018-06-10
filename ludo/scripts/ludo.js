@@ -26,16 +26,11 @@ function roll() {
   if (Number(text) <= 6 && Number(text) >= 1) {
     dice = Number(text);
   }
-/*  if (six_count > 2) {
-    player = (player + 1) % no_players;
-    six_count = 0;
-    return;
-  } */
 
   document.getElementById("roll").removeAttribute("onclick");
   document.getElementById("roll").style.cursor = "default";
   document.getElementById("dice").style.display = "block";
-
+  let count = 0;
   if (dice == 1) {
     document.getElementById("dice").style.backgroundPosition = "-27px -67px";
   }
@@ -53,9 +48,8 @@ function roll() {
   }
   else {
     document.getElementById("dice").style.backgroundPosition = "-222px -182px";
-    //six_count++;
-
     for (let i = 1; i < 5; i++) {
+      count++;
       let abc = document.getElementById(players_f[player] + "p" + i);
       let att = document.createAttribute("onclick");
       if ((player == 0 && b[i - 1] == 0) || (player == 1 && g[i - 1] == 0) || (player == 2 && y[i - 1] == 0) || (player == 3 && r[i - 1] == 0)) {
@@ -67,34 +61,34 @@ function roll() {
       abc.setAttributeNode(att);
       abc.style.cursor = "pointer";
       abc.parentNode.style.backgroundColor = "gray";
-      if (Number(position[player * 4 + i - 1].slice(1)) < 0 && 6 + Number(position[player * 4 + i - 1].slice(1)) < dice) {
-        abc.removeAttribute("onclick");
-        abc.style.cursor = "default";
-        abc.parentNode.style.removeProperty("background-color");
-      }
-    }
-  }
-
-  let count = 0;
-  for (let i = 1; i < 5; i++) {
-    if ((player == 0 && b[i - 1] == 0) || (player == 1 && g[i - 1] == 0) || (player == 2 && y[i - 1] == 0) || (player == 3 && r[i - 1] == 0)) {
-      count++;
-      let abc = document.getElementById(players_f[player] + "p" + i);
-      let att = document.createAttribute("onclick");
-      att.value = 'play("' + abc.parentNode.id  + '", "' + abc.id + '")';
-      abc.setAttributeNode(att);
-      abc.style.cursor = "pointer";
-      abc.parentNode.style.backgroundColor = "gray";
-      if (Number(position[player * 4 + i - 1].slice(1)) < 0 && 6 + Number(position[player * 4 + i - 1].slice(1)) < dice) {
-        abc.removeAttribute("onclick");
+      if ((Number(position[player * 4 + i - 1].slice(1)) < 0 && 6 + Number(position[player * 4 + i - 1].slice(1)) < dice) || position[player * 4 + i - 1].slice(1, 2) == "o") {
         count--;
+        abc.removeAttribute("onclick");
         abc.style.cursor = "default";
         abc.parentNode.style.removeProperty("background-color");
       }
     }
   }
-
-  if (count == 0 && dice != 6) {
+  if (dice != 6) {
+    for (let i = 1; i < 5; i++) {
+      if ((player == 0 && b[i - 1] == 0) || (player == 1 && g[i - 1] == 0) || (player == 2 && y[i - 1] == 0) || (player == 3 && r[i - 1] == 0)) {
+        count++;
+        let abc = document.getElementById(players_f[player] + "p" + i);
+        let att = document.createAttribute("onclick");
+        att.value = 'play("' + abc.parentNode.id  + '", "' + abc.id + '")';
+        abc.setAttributeNode(att);
+        abc.style.cursor = "pointer";
+        abc.parentNode.style.backgroundColor = "gray";
+        if (Number(position[player * 4 + i - 1].slice(1)) < 0 && 6 + Number(position[player * 4 + i - 1].slice(1)) < dice) {
+          abc.removeAttribute("onclick");
+          count--;
+          abc.style.cursor = "default";
+          abc.parentNode.style.removeProperty("background-color");
+        }
+      }
+    }
+  }
+  if (count == 0) {
     let abc = document.getElementById("roll");
     let att = document.createAttribute("onclick");
     att.value = "roll()";
@@ -105,7 +99,6 @@ function roll() {
 }
 
 function play(piece, id) {
-  //console.log(bp);
   let abc = document.getElementById("roll");
   let att = document.createAttribute("onclick");
   att.value = "roll()";
@@ -190,7 +183,6 @@ function move(piece, id, check) {
     num1 = 3;
   }
   let num5 = 4 * num1 + num2;
-  console.log(position[num5]);
   let itm = document.getElementById(id);
   let cln = itm.cloneNode(true);
   itm.parentNode.removeChild(itm);
@@ -242,7 +234,7 @@ function move(piece, id, check) {
     document.getElementById(position[num5]).removeChild(document.getElementById(position[num5]).firstChild);
     cuts--;
   }
-  if (count > 0) {
+  if (count > 0 && check == 1) {
     var multiple = document.createElement("P");
     var textnode = document.createTextNode("x" + (count + 1));
     multiple.appendChild(textnode);
@@ -342,10 +334,10 @@ function change(piece, id) {
 function reset() {
   b_active = 0, b_over = 0, y_active = 0, y_over = 0, r_active = 0, r_over = 0, g_active = 0, g_over = 0;
   for (var i = 1; i < 5; i++) {
-    move("bs" + i, "bp" + i, 1);
-    move("gs" + i, "gp" + i, 1);
-    move("ys" + i, "yp" + i, 1);
-    move("rs" + i, "rp" + i, 1);
+    move("bs" + i, "bp" + i, 0);
+    move("gs" + i, "gp" + i, 0);
+    move("ys" + i, "yp" + i, 0);
+    move("rs" + i, "rp" + i, 0);
   }
   dice = 0, player = 0, six_count = 0;
   position = ["bs1", "bs2", "bs3", "bs4", "gs1", "gs2", "gs3", "gs4", "ys1", "ys2", "ys3", "ys4", "rs1", "rs2", "rs3", "rs4"];
