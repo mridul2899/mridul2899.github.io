@@ -229,6 +229,12 @@ function move(piece, id, check) {
   if (check == 1 && document.getElementById(position[num5]).childNodes[0]) {
     document.getElementById(position[num5]).removeChild(document.getElementById(position[num5]).lastChild);
   }
+  if (cuts > 0 && dice != 6) {
+    player = (player - 1) % 4;
+    if (player == -1) {
+      player = 3;
+    }
+  }
   position[num5] = piece;
   while (cuts > 1) {
     document.getElementById(position[num5]).removeChild(document.getElementById(position[num5]).firstChild);
@@ -241,6 +247,12 @@ function move(piece, id, check) {
     var parent = document.getElementById(id).parentNode;
     multiple.style.cssText = "position: absolute; margin: 8px;";
     parent.appendChild(multiple);
+  }
+  if (piece.slice(1, 2) == "o" && dice != 6) {
+    player = (player - 1) % 4;
+    if (player == -1) {
+      player = 3;
+    }
   }
   let win = document.getElementById("win");
   if (b_over == 4 || g_over == 4 || y_over == 4 || r_over == 4) {
